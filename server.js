@@ -7,8 +7,9 @@ server.use(express.json());
 
 const database = new DatabasePostgres();
 
-server.post("/users/login", async (request, response) => {
-  const { username, password } = request.body;
+server.get("/login", async (request, response) => {
+  const username = request.query.username;
+  const password = request.query.password;
 
   if (!username || !password) {
     return response.status(401).send("Missing required fields");
@@ -34,7 +35,7 @@ server.post("/users/login", async (request, response) => {
   return response.status(401).send("Username or password is incorrect");
 });
 
-server.post("/users/signup", async (request, response) => {
+server.post("/signup", async (request, response) => {
   const { username, email, password } = request.body;
 
   if (!username || !email || !password) {
